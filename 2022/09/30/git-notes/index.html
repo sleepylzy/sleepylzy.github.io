@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="sleepylzy">
+
+
+
+    <meta name="description" content="2352259272@qq.com">
+
+
+
+<title>git notes | sleepylzy&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">sleepylzy&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">sleepylzy&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">git notes</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">sleepylzy</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 30, 2022&nbsp;&nbsp;17:15:37</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/git/">git</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="Git基本概念"><a href="#Git基本概念" class="headerlink" title="Git基本概念"></a>Git基本概念</h1><ol>
+<li>Git是一个分布式版本控制系统</li>
+<li>由 Linus 花费两周时间完成</li>
+<li>分布式版本控制系统优势在于：<ul>
+<li>可以不用联网</li>
+<li>每个人的电脑上都有一个完整的版本库，安全性更高</li>
+<li>优秀的分支管理</li>
+<li>开源且免费</li>
+</ul>
+</li>
+</ol>
+<h1 id="Git安装"><a href="#Git安装" class="headerlink" title="Git安装"></a>Git安装</h1><p>windows 系统下 进入官网下载 <a target="_blank" rel="noopener" href="https://git-scm.com/">Git (git-scm.com)</a></p>
+<p>点击 Downloads ，下载windows下64位版本:</p>
+<img src="/2022/09/30/git-notes/image-20220906172433080.png" class="" title="This is an image">
+
+<img src="/2022/09/30/git-notes/image-20220906172617222.png" class="" title="This is an image">
+
+<img src="/2022/09/30/git-notes/image-20220906172715743.png" class="" title="This is an image">
+
+
+
+<p>下载完成后，运行安装程序，选择好安装路径，一直点下一步</p>
+<p>安装好后，在开始桌面右键，点击Git Bash 就可以打开命令窗口了</p>
+<img src="/2022/09/30/git-notes/image-20220906173128830.png" class="" title="This is an image">
+
+
+
+
+
+<h1 id="Git基本配置"><a href="#Git基本配置" class="headerlink" title="Git基本配置"></a>Git基本配置</h1><p>在打开的命令行中输入下面两行进行个人配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;xxxxx&quot;</span><br><span class="line">git config --global user.email &quot;xxxx&quot;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用下面的命令查看配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config -l</span><br><span class="line">git config --global --list  #系统的配置</span><br><span class="line">git config --system --list  #个人的配置</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/09/30/git-notes/image-20220906180026212.png" class="" title="This is an image">
+
+<p>可以在 git \ etc\ .gitconfig  目录和 C:\ Users \ 用户名 \ .gitconfig  目录下查看配置信息</p>
+<h1 id="创建一个本地版本库"><a href="#创建一个本地版本库" class="headerlink" title="创建一个本地版本库"></a>创建一个本地版本库</h1><p>在合适的位置打开Git Bash 在想要的位置新创建一个目录：</p>
+<img src="/2022/09/30/git-notes/image-20220906184250673.png" class="" title="This is an image">
+
+<p>这里用了一些 Linux 的命令</p>
+<p>常见Linux命令：</p>
+<table>
+<thead>
+<tr>
+<th><strong>cd</strong></th>
+<th>改变目录</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>cd ..</strong></td>
+<td>回退到上一个目录，直接cd进入默认目录</td>
+</tr>
+<tr>
+<td><strong>pwd</strong></td>
+<td>显示当前所在的目录路径</td>
+</tr>
+<tr>
+<td><strong>ls</strong></td>
+<td>列出当前目录中的所有文件</td>
+</tr>
+<tr>
+<td><strong>touch</strong></td>
+<td>新建一个文件</td>
+</tr>
+<tr>
+<td><strong>rm</strong></td>
+<td>删除一个文件</td>
+</tr>
+<tr>
+<td><strong>mkdir</strong></td>
+<td>新建一个目录</td>
+</tr>
+<tr>
+<td><strong>rm -r</strong></td>
+<td>删除一个文件夹</td>
+</tr>
+<tr>
+<td><strong>mv</strong></td>
+<td>移动文件</td>
+</tr>
+<tr>
+<td><strong>reset</strong></td>
+<td>重新初始化终端&#x2F;清屏</td>
+</tr>
+<tr>
+<td><strong>clear</strong></td>
+<td>清屏</td>
+</tr>
+<tr>
+<td><strong>history</strong></td>
+<td>查看命令历史</td>
+</tr>
+<tr>
+<td><strong>help</strong></td>
+<td>帮助</td>
+</tr>
+<tr>
+<td><strong>exit</strong></td>
+<td>退出</td>
+</tr>
+<tr>
+<td><strong>#</strong></td>
+<td>表示注释</td>
+</tr>
+</tbody></table>
+<p>接着使用下面命令将该目录下变成一个空仓库，完成后出现 .git文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/09/30/git-notes/image-20220906185410776.png" class="" title="This is an image">
+
+<p>之后就可以把自己的项目放在这个目录下了，或者在项目目录下git init</p>
+<p>一般把它叫做工作区</p>
+<h1 id="Git基本添加命令"><a href="#Git基本添加命令" class="headerlink" title="Git基本添加命令"></a>Git基本添加命令</h1><p>下面是git的基本工作原理：</p>
+<img src="/2022/09/30/git-notes/image-20220906192511863.png" class="" title="This is an image">
+
+
+
+<p>我先在learngit目录下创建一个readme.txt文件内容为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello , I am learing git.</span><br></pre></td></tr></table></figure>
+
+
+
+<p>之后用下列命令将其存入本地仓库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add readme.txt</span><br><span class="line">git commit readme.txt -m &quot;wrote a readme file&quot;</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/09/30/git-notes/image-20220906193431414.png" class="" title="This is an image">
+
+<p>其中add 将文件存入暂存区</p>
+<p>commit 将文件存入仓库区 -m 是提交信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add   #将全部文件都提交到暂存区</span><br><span class="line">git commit -m &quot;xxxx&quot;   #将暂存区的文件都提交</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="查看状态"><a href="#查看状态" class="headerlink" title="查看状态"></a>查看状态</h1><p>我先将readme文件进行一些修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello , I am learing git.</span><br><span class="line">Git is heard to learn.</span><br></pre></td></tr></table></figure>
+
+
+
+<p>之后可以使用这些命令查看当前状态和我修改的内容:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">git diff readme.txt</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/09/30/git-notes/image-20220906194610172.png" class="" title="This is an image">
+
+<p>之后再进行提交</p>
+<h1 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h1><p>首先可以用这个命令看之前的提交历史</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+
+<p>这个命令看之前命令的历史</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/09/30/git-notes/image-20220906201033751.png" class="" title="This is an image">
+
+<p>其中的一串码就是每次commit的id</p>
+<p>首先明白</p>
+<p>HEAD表示当前的版本， HEAD^就表示上一个版本，HEAD^^ 表示上上个版本</p>
+<p>HEAD~数字  就表示上几个版本</p>
+<p>退到上一个版本就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+
+
+
+<p>也可以用commit的id 让HEAD指向哪次commit</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard commit_id</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/09/30/git-notes/image-20220906201835488.png" class="" title="This is an image">
+
+<p>reset 同时还会清除暂存区</p>
+<p>如果工作区中添加了错误的信息，想要回到上一个版本</p>
+<p>不管上个版本是在暂存区还是已经commit到仓库中，用下面的命令就可以撤销工作区的修改了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout --readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>如果不加 –readme.txt  就是切换分支</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h1><p>在C:\Users\用户名\ .ssh目录下寻找 id_rsa 和 id_rsa.public</p>
+<p>这两个文件，它俩就是SSH Key 的密钥 一个是公钥一个是私钥</p>
+<p>如果没有可以这么创建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;xxxxx&quot;  #填入自己的邮箱</span><br></pre></td></tr></table></figure>
+
+
+
+<p>然后在GitHub中添加你的公钥，让GitHub识别你</p>
+<img src="/2022/09/30/git-notes/image-20220907102411622.png" class="" title="This is an image">
+
+
+
+<p>在github中创建一个空的仓库</p>
+<p>按照github的指示，将该仓库与本地仓库关联</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:xxxx/Learngit.git #origin 是默认的命名</span><br><span class="line">git branch -M main  # 将分支改名为main 因为与黑人敏感词有关建议将master修改</span><br><span class="line">git push -u origin main # 加上了-u参数，推送后会自动关联</span><br></pre></td></tr></table></figure>
+
+<p>之后想提交就可以提交了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin main</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看远程信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p>删除远程仓库，只是切断关联了，github里的仓库还在</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remot rm origin</span><br></pre></td></tr></table></figure>
+
+
+
+<p>接下来学习克隆远程仓库</p>
+<p>在github中创建一个仓库</p>
+<p>之后在自己想要的目录下clone仓库即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote clone git@github.com:xxxxx/xxxxxx</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h3><p>这里我push的时候出现了问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ssh: connect to host github.com port 22: Connection refused</span><br><span class="line">fatal: Could not read from remote repository.</span><br><span class="line"></span><br><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br></pre></td></tr></table></figure>
+
+<p>原因是登陆GitHub时打开了steam++来加速，关闭steam++就没问题了。</p>
+<p>之后我在push招新代码题时又出现了类似问题，即使关闭了watt toolkit也不行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git报错ssh: connect to host github.com port 22: Connection timed out</span><br></pre></td></tr></table></figure>
+
+<p>检查一下ssh是否能够连接成功,报错相同。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>通过查阅资料，得知原因可能是由于电脑的防火墙或者其他网络原因导致ssh连接方式 端口22被封锁。</p>
+<p>解决方案：</p>
+<p>在.ssh文件夹下的config文件内添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">User 注册github的邮箱</span><br><span class="line">Hostname ssh.github.com</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile C:\Users\panda\.ssh\id_rsa</span><br><span class="line">Port 443</span><br></pre></td></tr></table></figure>
+
+<p>之后push就没问题了。</p>
+<h1 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h1><p>创建分支</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch xxx  # xxx为分支名</span><br></pre></td></tr></table></figure>
+
+<p>切换分支</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout xxx</span><br></pre></td></tr></table></figure>
+
+<p>创建并切换到一新分支</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b xxx</span><br></pre></td></tr></table></figure>
+
+<p>查看分支</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch xxx</span><br></pre></td></tr></table></figure>
+
+<p>删除分支</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d(D) xxx  # -D为强制删除  </span><br></pre></td></tr></table></figure>
+
+<p>合并分支到main分支</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge xxx</span><br></pre></td></tr></table></figure>
+
+<p>合并后可以将该分支删除了</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>sleepylzy</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2022/09/30/git-notes/">http://example.com/2022/09/30/git-notes/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/git/"># git</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/09/30/virtual-machine-notes/">virtual machine notes</a>
+            
+            
+            <a class="next" rel="next" href="/2022/09/30/mysql-notes/">mysql notes</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© sleepylzy | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="sleepylzy">
+
+
+
+    <meta name="description" content="2352259272@qq.com">
+
+
+
+<title>virtual machine notes | sleepylzy&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">sleepylzy&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">sleepylzy&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">virtual machine notes</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">sleepylzy</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 30, 2022&nbsp;&nbsp;17:16:52</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/virtual-machine/">virtual machine</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="下载虚拟机软件"><a href="#下载虚拟机软件" class="headerlink" title="下载虚拟机软件"></a>下载虚拟机软件</h1><p>进入官网进行下载：<a target="_blank" rel="noopener" href="https://www.vmware.com/cn/products/workstation-pro/workstation-pro-evaluation.html">下载 VMware Workstation Pro | CN</a></p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909121616952.png" class="" title="This is an image">
+
+<p>下载试用完成后，可以百度搜索许可证，永久使用</p>
+<h1 id="卸载虚拟机"><a href="#卸载虚拟机" class="headerlink" title="卸载虚拟机"></a>卸载虚拟机</h1><p>删除之前安装的centos系统</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909093822716.png" class="" title="This is an image">
+
+
+
+<h1 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h1><p>进入官网下载安装：<a target="_blank" rel="noopener" href="https://ubuntu.com/download">Get Ubuntu | Download | Ubuntu</a></p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909094550075.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909094513135.png" class="" title="This is an image">
+
+
+
+<p>发现下载的很慢，寻找镜像网站：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909094738297.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909095023406.png" class="" title="This is an image">
+
+
+
+<p>下载完成后开始创建虚拟机：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909095204608.png" class="" title="This is an image">
+
+<p>使用推荐的配置方式更加简单：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909095227047.png" class="" title="This is an image">
+
+<p>稍后安装操作系统：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909095323527.png" class="" title="This is an image">
+
+<p>选择虚拟机的操作系统与版本：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909095459739.png" class="" title="This is an image">
+
+<p>选择安装路径：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909095701040.png" class="" title="This is an image">
+
+<p>给虚拟机分配磁盘大小：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909095811152.png" class="" title="This is an image">
+
+<p>点击进去再配置一下：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909095833648.png" class="" title="This is an image">
+
+<p>这里根据需求更改内存大小和处理器数量，其他默认就可以</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909100049931.png" class="" title="This is an image">
+
+<p>这里选择之前下载好的ISO文件：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909100158081.png" class="" title="This is an image">
+
+<p>开启虚拟机，进行系统安装：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909100315339.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909100844167.png" class="" title="This is an image">
+
+<p>选择正常安装，因为要有图形界面：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909100735424.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909100958794.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909101345354.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909101447633.png" class="" title="This is an image">
+
+<p>设置普通用户名密码：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909101547718.png" class="" title="This is an image">
+
+<p>耐心等待安装，时间较长：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909101629099.png" class="" title="This is an image">
+
+<p>重新启动完成安装：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909105219263.png" class="" title="This is an image">
+
+
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>重启过后界面突然变小，看起来很很难受</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909105709587.png" class="" title="This is an image">
+
+<p>根据网上的教程开始安装VMwareTools工具来恢复</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909110443719.png" class="" title="This is an image">
+
+<p>将压缩包拖到桌面</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909110653489.png" class="" title="This is an image">
+
+<p>解压文件：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909110909065.png" class="" title="This is an image">
+
+<p>安装文件：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909111125291.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909111402557.png" class="" title="This is an image">
+
+<p>安装完成后重启，结果窗口依然很小</p>
+<p>发现在系统修改中修改分辨率可以适当放大，但是无法完美贴合窗口</p>
+<p>多次重启无果，一怒之下&#x3D;&#x3D;<strong>重新安装Ubuntu</strong>&#x3D;&#x3D;，问题解决</p>
+<h1 id="简单配置"><a href="#简单配置" class="headerlink" title="简单配置"></a>简单配置</h1><p>安装一些常用软件gcc,make,gdb,git,vim等</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909131754454.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909132433556.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909132523259.png" class="" title="This is an image">
+
+
+
+<h1 id="下载远程访问工具"><a href="#下载远程访问工具" class="headerlink" title="下载远程访问工具"></a>下载远程访问工具</h1><p>访问官网下载Xshell和Xftp家校免费版 ：<a target="_blank" rel="noopener" href="https://www.xshell.com/zh/free-for-home-school/">家庭&#x2F;学校免费 - NetSarang Website (xshell.com)</a></p>
+<p>在Ubuntu终端中用以下命令查看虚拟机的IP地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
+
+<p>发现不成功，要求下载net-tools</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909163805477.png" class="" title="This is an image">
+
+<p>下载完成后，在用ifconfig就可以看到IP了</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909163929753.png" class="" title="This is an image">
+
+<p>打开Xshell新建一个会话：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909164111010.png" class="" title="This is an image">
+
+<p>输入名称和刚刚查到的IP地址</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909164210872.png" class="" title="This is an image">
+
+<p>点击连接：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909164233376.png" class="" title="This is an image">
+
+<p>发现连接不上，原来是没有在Ubuntu中打开ssh服务：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909165550124.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909165523952.png" class="" title="This is an image">
+
+<p>之后在输入用户名密码就连接上了</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909165630989.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909165650709.png" class="" title="This is an image">
+
+<p>之后就可以远程登录办公了：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909165721656.png" class="" title="This is an image">
+
+<p>同样的，使用Xftp进行文件传输，但是发现有乱码：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909165943807.png" class="" title="This is an image">
+
+<p>在属性中对编码进行修改：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909170049323.png" class="" title="This is an image">
+
+<p>之后两个系统就可以远程互换文件了</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909170117346.png" class="" title="This is an image">
+
+<p>用code远程连接linux</p>
+<p>先下载一个Remote-SSH插件</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909170342305.png" class="" title="This is an image">
+
+<p>点击下方绿色按键：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909170423522.png" class="" title="This is an image">
+
+<p>点击ssh config文件：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909170713045.png" class="" title="This is an image">
+
+<p>修改信息</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909170742458.png" class="" title="This is an image">
+
+<p>点击进行连接</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909170942394.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909171022842.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909171054767.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909171150599.png" class="" title="This is an image">
+
+<p>连接成功了：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909171201503.png" class="" title="This is an image">
+
+
+
+<p>每次连接都需要密码，接下来就用ssh密钥来配置一下<strong>免密登录</strong></p>
+<p>首先用之前的Xftp工具将我的ssh公钥复制到&#x2F;~目录下，该目录下有我的.ssh文件</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909200204262.png" class="" title="This is an image">
+
+<p>将公钥移动到.ssh文件中</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909201405756.png" class="" title="This is an image">
+
+<img src="/2022/09/30/virtual-machine-notes/image-20220909201445875.png" class="" title="This is an image">
+
+<p>创建一个文件来放置公钥，将内容粘贴过去</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909201535646.png" class="" title="This is an image">
+
+<p>重启一下服务：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909201619280.png" class="" title="This is an image">
+
+<p>之后再打开vscode，发现确实无需输入密码直接就连接上了：</p>
+<img src="/2022/09/30/virtual-machine-notes/image-20220909202301164.png" class="" title="This is an image">
+
+
+
+<h1 id="个人感想"><a href="#个人感想" class="headerlink" title="个人感想"></a>个人感想</h1><ol>
+<li>在跟着网上的博客一步一步操作学习的过程中发现，即使有些步骤目前不清楚为什么这样做，在多操作几次之后就会有些眉目，了解每一步的作用</li>
+<li>有些软件与技术如果用太新的，遇到相应的问题就会难以在网上找到解决方法或方法不管用，对于纯纯的萌新不太友好</li>
+<li>很多的问题都可以通过重启或重新操作一遍得到解决</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>sleepylzy</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2022/09/30/virtual-machine-notes/">http://example.com/2022/09/30/virtual-machine-notes/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/virtual-machine/"># virtual machine</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/09/30/java-mulithreading/">java_mulithreading</a>
+            
+            
+            <a class="next" rel="next" href="/2022/09/30/git-notes/">git notes</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© sleepylzy | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="sleepylzy">
+
+
+
+    <meta name="description" content="2352259272@qq.com">
+
+
+
+<title>mysql notes | sleepylzy&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">sleepylzy&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">sleepylzy&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? 'Expand all' : 'Collapse all';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">mysql notes</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">sleepylzy</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 30, 2022&nbsp;&nbsp;17:14:05</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/MySQL/">MySQL</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="SQL通用语法"><a href="#SQL通用语法" class="headerlink" title="SQL通用语法"></a>SQL通用语法</h1><p>1.以分号结尾，可以单行或多行</p>
+<p>2.MySQL的SQL语句不区分大小写</p>
+<p>3.注释</p>
+<pre><code>单行注释： `-- 注释内容` 或 `#注释内容`
+
+多行注释： `/* 注释内容 */`
+</code></pre>
+<h1 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h1><ul>
+<li>DDL 数据定义语言，操作数据库，表，列等</li>
+<li>DML 数据操作语言，对表中数据经行增删改操作</li>
+<li>DQL 数据查询语言，对表中数据经行查找</li>
+<li>DCL 数据控制语言，用来定义数据库的访问权限和安全级别，及创建用户</li>
+</ul>
+<h2 id="DDL："><a href="#DDL：" class="headerlink" title="DDL："></a>DDL：</h2><h3 id="操作数据库"><a href="#操作数据库" class="headerlink" title="操作数据库"></a>操作数据库</h3><p>1.查询</p>
+<p><strong><code>show databases;</code></strong></p>
+<p>2.创建</p>
+<ul>
+<li>创建数据库 <strong><code>create database 创建数据库名称;</code></strong></li>
+<li>创建数据库（判断，如果不存在则创建）**<code>create database if not exists 数据库名称;</code>**</li>
+</ul>
+<p>3.删除</p>
+<ul>
+<li>删除数据库 <strong><code>drop database 数据库名称;</code></strong></li>
+<li>删除数据库（判断，如果存在则删除）**<code>drop database if exists 数据库名称;</code>**</li>
+</ul>
+<p>4.使用数据库</p>
+<ul>
+<li>查看当前使用的数据库 <strong><code>select database();</code></strong></li>
+<li>使用数据库 <strong><code>use 数据库名称;</code></strong></li>
+</ul>
+<h3 id="操作表"><a href="#操作表" class="headerlink" title="操作表"></a>操作表</h3><p>1.查询</p>
+<ul>
+<li>查询当前数据库下所有表的名称 <strong><code>show tables;</code></strong></li>
+<li>查询表结构 <strong><code>desc 表名称;</code></strong></li>
+</ul>
+<p>2.创建</p>
+<ul>
+<li>创建表</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">		字段名<span class="number">1</span> 数据类型<span class="number">1</span>，</span><br><span class="line">		字段名<span class="number">2</span> 数据类型<span class="number">2</span>，</span><br><span class="line">		...</span><br><span class="line">		字段名n 数据类型n</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<pre><code>        **注意最后一行末尾不加逗号**
+</code></pre>
+<ul>
+<li>数据类型</li>
+</ul>
+<img src="/2022/09/30/mysql-notes/image-20220812105928127.png" class="" title="This is an image">
+
+<p>3.删除</p>
+<ul>
+<li>删除表**<code>drop table 表名;</code>**</li>
+<li>删除表时判断表是否存在**<code>drop table if exists 表名;</code>**</li>
+</ul>
+<p>4.修改表</p>
+<ul>
+<li>修改表名**<code>alter table 表名 rename to 新表名;</code>**</li>
+<li>添加一列 <strong><code>alter table 表名 add 新列名 数据类型;</code></strong></li>
+<li>修改数据类型 <strong><code>alter table 表名 modify 列名 新数据类型;</code></strong></li>
+<li>修改列名和数据类型 <strong><code>alter table 表名 change 列名 新列名 新数据类型;</code></strong></li>
+<li>删除列 <strong><code>alter table 表名 dorp 列名;</code></strong></li>
+</ul>
+<h2 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h2><h3 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h3><ul>
+<li>给指定列添加数据 <strong><code>insert into 表名(列名1,列名2,...) values(值1,值2，...);</code></strong></li>
+<li>给全部列添加数据 <strong><code>insert into 表名 values(值1,值2,...);</code></strong></li>
+<li>批量添加数据 <strong><code>insert into 表名(列名1,列名2,...) values(值1,值2，...),(值1,值2,...),...;</code></strong> <strong><code>insert into 表名 values(值1,值2,...),(值1,值2,...),...;</code></strong></li>
+</ul>
+<h3 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h3><ul>
+<li>修改表数据 <strong><code>update 表名 set 列名1=值1,列名2=值2,...where 条件;</code></strong></li>
+</ul>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><ul>
+<li>删除数据 <strong><code>delete from 表名 where 条件;</code></strong></li>
+</ul>
+<h2 id="DQL"><a href="#DQL" class="headerlink" title="DQL"></a>DQL</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">	字段列表</span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">    表名列表 </span><br><span class="line"><span class="keyword">WHERE</span> </span><br><span class="line">    条件列表</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">    分组字段</span><br><span class="line"><span class="keyword">HAVING</span></span><br><span class="line">    分组后条件</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span></span><br><span class="line">    排序字段</span><br><span class="line">LIMIT</span><br><span class="line">    分页限定 </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="基础查询"><a href="#基础查询" class="headerlink" title="基础查询"></a>基础查询</h3><ul>
+<li><strong>查询多个字段</strong></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段列表 <span class="keyword">FROM</span> 表名;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> 表名; <span class="comment">-- 查询所有数据</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>去除重复记录</strong></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> 字段列表 <span class="keyword">FROM</span> 表名;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>起别名</strong></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">AS</span>: <span class="keyword">AS</span> 也可以省略</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段列表 <span class="keyword">FROM</span> 表名 <span class="keyword">WHERE</span> 条件列表;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>条件</strong></li>
+</ul>
+<p>条件列表可以使用以下运算符</p>
+<img src="/2022/09/30/mysql-notes/image-20220812215741113.png" class="" title="This is an image">
+
+<h3 id="排序查询"><a href="#排序查询" class="headerlink" title="排序查询"></a>排序查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段列表 <span class="keyword">FROM</span> 表名 <span class="keyword">ORDER</span> <span class="keyword">BY</span> 排序字段名<span class="number">1</span> [排序方式<span class="number">1</span>],排序字段名<span class="number">2</span> [排序方式<span class="number">2</span>] …;</span><br></pre></td></tr></table></figure>
+
+<p>上述语句中的排序方式有两种，分别是：</p>
+<ul>
+<li>ASC ： 升序排列 <strong>（默认值）</strong></li>
+<li>DESC ： 降序排列</li>
+</ul>
+<blockquote>
+<p>注意：如果有多个排序条件，当前边的条件值一样时，才会根据第二条件进行排序</p>
+</blockquote>
+<h3 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h3><ul>
+<li><strong>聚合函数分类</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>count(列名)</td>
+<td>统计数量（一般选用不为null的列）</td>
+</tr>
+<tr>
+<td>max(列名)</td>
+<td>最大值</td>
+</tr>
+<tr>
+<td>min(列名)</td>
+<td>最小值</td>
+</tr>
+<tr>
+<td>sum(列名)</td>
+<td>求和</td>
+</tr>
+<tr>
+<td>avg(列名)</td>
+<td>平均值</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>聚合函数语法</strong></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 聚合函数名(列名) <span class="keyword">FROM</span> 表;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：null 值不参与所有聚合函数运算</p>
+</blockquote>
+<h3 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段列表 <span class="keyword">FROM</span> 表名 [<span class="keyword">WHERE</span> 分组前条件限定] <span class="keyword">GROUP</span> <span class="keyword">BY</span> 分组字段名 [<span class="keyword">HAVING</span> 分组后条件过滤];</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：分组之后，查询的字段为聚合函数和分组字段，查询其他字段无任何意义</p>
+</blockquote>
+<p><strong>where 和 having 区别：</strong></p>
+<ul>
+<li><p>执行时机不一样：where 是分组之前进行限定，不满足where条件，则不参与分组，而having是分组之后对结果进行过滤。</p>
+</li>
+<li><p>可判断的条件不一样：where 不能对聚合函数进行判断，having 可以。</p>
+</li>
+</ul>
+<h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段列表 <span class="keyword">FROM</span> 表名 LIMIT  起始索引 , 查询条目数;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意： 上述语句中的起始索引是从0开始</p>
+</blockquote>
+<h1 id="MySQL高级"><a href="#MySQL高级" class="headerlink" title="MySQL高级"></a>MySQL高级</h1><h2 id="1-约束"><a href="#1-约束" class="headerlink" title="1.约束"></a>1.约束</h2><h3 id="非空约束"><a href="#非空约束" class="headerlink" title="非空约束"></a>非空约束</h3><ul>
+<li><p>关键字是 NOT NULL</p>
+</li>
+<li><p>用于保证列中所有数据不能有null值</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建表时添加</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">	列名 数据类型 <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">	...</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 建完表后添加</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 modify 字段名 数据类型 <span class="keyword">not</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除约束</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 modify 字段名 数据类型;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="唯一约束"><a href="#唯一约束" class="headerlink" title="唯一约束"></a>唯一约束</h3><ul>
+<li>关键字是  UNIQUE</li>
+<li>用于保证列中数据各不相同</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建表时添加</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">	列名 数据类型 <span class="keyword">unique</span> [auto_increment],</span><br><span class="line">    <span class="comment">-- auto_increment:当不指定值时自动增长，当列是数字类型 并且唯一约束</span></span><br><span class="line">    ...</span><br><span class="line">);</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">	列名 数据类型，</span><br><span class="line">    ...</span><br><span class="line">    [<span class="keyword">constraint</span>] [约束名称] <span class="keyword">unique</span>(列名)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 建表后添加</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 modify 字段名 数据类型 <span class="keyword">unique</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除约束</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="keyword">drop</span> index 字段名;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="主键约束"><a href="#主键约束" class="headerlink" title="主键约束"></a>主键约束</h3><ul>
+<li><p>关键字是  PRIMARY KEY</p>
+</li>
+<li><p>主键是一行数据的唯一标识，要求非空且唯一</p>
+</li>
+<li><p>一张表只能有一个主键</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建表时添加主键约束</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">	列名 数据类型 <span class="keyword">primary</span> key [auto_increment],</span><br><span class="line">    ...</span><br><span class="line">) ;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">	列名 数据类型,</span><br><span class="line">    [<span class="keyword">constraint</span>] [约束名] <span class="keyword">primary</span> key(列名)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 建表后添加</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">add</span> <span class="keyword">primary</span> key(字段名);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除约束</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">drop</span> <span class="keyword">primary</span> key;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="检查约束"><a href="#检查约束" class="headerlink" title="检查约束"></a>检查约束</h3><ul>
+<li>关键字是  CHECK</li>
+</ul>
+<blockquote>
+<p>注意：MySQL不支持检查约束。</p>
+</blockquote>
+<h3 id="默认约束"><a href="#默认约束" class="headerlink" title="默认约束"></a>默认约束</h3><ul>
+<li>关键字是   DEFAULT</li>
+<li>保存数据时，未指定值则采用默认值</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建表时添加默认约束</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">	列名 设计类型 <span class="keyword">default</span> 默认值,</span><br><span class="line">    ...</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 建完表后添加默认约束</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">alter</span> 列名 <span class="keyword">set</span> <span class="keyword">default</span> 默认值;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除约束</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">alter</span> 列名 <span class="keyword">drop</span> <span class="keyword">default</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="外键约束"><a href="#外键约束" class="headerlink" title="外键约束"></a>外键约束</h3><ul>
+<li><p>关键字是  FOREIGN KEY</p>
+</li>
+<li><p>外键用来让两个表的数据之间建立链接，保证数据的一致性和完整性</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建表时添加外键约束</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">	列名 数据类型,</span><br><span class="line">    ...</span><br><span class="line">    [<span class="keyword">constraint</span>] [外键名称] <span class="keyword">foreign</span> key(外键列名) reference 主表(主表列名)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 建完表后添加外键约束</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">add</span> <span class="keyword">constraint</span> 外键名称 <span class="keyword">foreign</span> key (外键字段名称) reference 主表名称(主表列名);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除外键约束</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">drop</span> <span class="keyword">foreign</span> key 外键名称;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-数据库设计"><a href="#2-数据库设计" class="headerlink" title="2.数据库设计"></a>2.数据库设计</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li>数据库设计就是根据业务系统的具体需求，结合我们所选用的DBMS，为这个业务系统构造出最优的数据存储模型。</li>
+<li>建立数据库中的&#x3D;&#x3D;表结构&#x3D;&#x3D;以及&#x3D;&#x3D;表与表之间的关联关系&#x3D;&#x3D;的过程。</li>
+<li>有哪些表？表里有哪些字段？表和表之间有什么关系？</li>
+</ul>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ul>
+<li>需求分析</li>
+<li>逻辑分析</li>
+<li>物理设计</li>
+<li>维护设计</li>
+</ul>
+<h3 id="表关系"><a href="#表关系" class="headerlink" title="表关系"></a>表关系</h3><ul>
+<li><p>一对多</p>
+<p>&#x3D;&#x3D;在多的一方建立外键，指向一的一方的主键&#x3D;&#x3D;</p>
+</li>
+<li><p>多对多</p>
+<p>&#x3D;&#x3D;建立第三张中间表，中间表至少包含两个外键，分别关联两方主键&#x3D;&#x3D;</p>
+</li>
+<li><p>一对一</p>
+<p>&#x3D;&#x3D;在任意一方加入外键，关联另一方主键，并且设置外键为唯一(UNIQUE)&#x3D;&#x3D;</p>
+</li>
+</ul>
+<h2 id="3-多表查询"><a href="#3-多表查询" class="headerlink" title="3.多表查询"></a>3.多表查询</h2><h3 id="内连接查询"><a href="#内连接查询" class="headerlink" title="内连接查询"></a>内连接查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 隐式内连接</span></span><br><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表<span class="number">1</span>,表<span class="number">2.</span>.. <span class="keyword">where</span> 条件;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 显示内连接</span></span><br><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表<span class="number">1</span> [<span class="keyword">inner</span>] <span class="keyword">join</span> 表<span class="number">2</span> <span class="keyword">on</span> 条件;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>内连接相当于查询 A B 交集数据</p>
+</blockquote>
+<h3 id="外连接查询"><a href="#外连接查询" class="headerlink" title="外连接查询"></a>外连接查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 左外连接</span></span><br><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表<span class="number">1</span> <span class="keyword">left</span> [<span class="keyword">outer</span>] <span class="keyword">join</span> 表<span class="number">2</span> <span class="keyword">on</span> 条件;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 右外连接</span></span><br><span class="line"><span class="keyword">select</span> 字段列表 <span class="keyword">from</span> 表<span class="number">1</span> <span class="keyword">right</span> [<span class="keyword">outer</span>] <span class="keyword">join</span> 表<span class="number">2</span> <span class="keyword">on</span> 条件;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>左外连接：相当于查询A表所有数据和交集部分数据</p>
+<p>右外连接：相当于查询B表所有数据和交集部分数据</p>
+</blockquote>
+<h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><p>&#x3D;&#x3D;查询中嵌套查询，称嵌套查询为子查询。&#x3D;&#x3D;</p>
+<ul>
+<li><p>子查询根据查询结果不同，作用不同</p>
+<ul>
+<li>子查询语句结果是单行单列，子查询语句作为条件值，使用 &#x3D;  !&#x3D;  &gt;  &lt;  等进行条件判断</li>
+</ul>
+<ul>
+<li>子查询语句结果是多行单列，子查询语句作为条件值，使用 in 等关键字进行条件判断</li>
+<li>子查询语句结果是多行多列，子查询语句作为虚拟表</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-事务"><a href="#4-事务" class="headerlink" title="4.事务"></a>4.事务</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 开启事务</span></span><br><span class="line"><span class="keyword">start</span> transaction;</span><br><span class="line"><span class="comment">-- 或者</span></span><br><span class="line"><span class="keyword">begin</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 提交事务</span></span><br><span class="line"><span class="keyword">commit</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 回滚事务</span></span><br><span class="line"><span class="keyword">rollback</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="事务的四大特征"><a href="#事务的四大特征" class="headerlink" title="事务的四大特征"></a>事务的四大特征</h3><ul>
+<li><p>原子性（Atomicity）: 事务是不可分割的最小操作单位，要么同时成功，要么同时失败</p>
+</li>
+<li><p>一致性（Consistency） :事务完成时，必须使所有的数据都保持一致状态（事务按照预期生效，数据的状态是预期的状态。）</p>
+</li>
+<li><p>隔离性（Isolation） :多个事务之间，操作的可见性（事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离。）</p>
+</li>
+<li><p>持久性（Durability） :事务一旦提交或回滚，它对数据库中的数据的改变就是永久的</p>
+</li>
+</ul>
+<blockquote>
+<p>&#x3D;&#x3D;说明：&#x3D;&#x3D;</p>
+<p>mysql中事务是自动提交的。</p>
+<p>也就是说我们不添加事务执行sql语句，语句执行完毕会自动的提交事务。</p>
+<p>可以通过下面语句查询默认提交方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT @<span class="meta">@autocommit</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查询到的结果是1 则表示自动提交，结果是0表示手动提交。当然也可以通过下面语句修改提交方式</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> @<span class="variable">@autocommit</span> <span class="operator">=</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure></blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>sleepylzy</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2022/09/30/mysql-notes/">http://example.com/2022/09/30/mysql-notes/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/MySQL/"># MySQL</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/09/30/git-notes/">git notes</a>
+            
+            
+            <a class="next" rel="next" href="/2022/09/07/hello-world/">Hello World</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© sleepylzy | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
